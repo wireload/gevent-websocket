@@ -1,5 +1,6 @@
 import struct
 
+from socket import SHUT_RDWR
 from errno import EINTR
 from gevent.coros import Semaphore
 
@@ -358,6 +359,7 @@ class WebSocketHybi(WebSocket):
 
     def _close(self):
         if self.socket is not None:
+            self.socket.shutdown(SHUT_RDWR)
             self.socket = None
             self._write = None
 
